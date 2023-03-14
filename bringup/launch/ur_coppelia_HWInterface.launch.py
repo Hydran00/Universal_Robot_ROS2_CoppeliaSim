@@ -74,7 +74,7 @@ def generate_launch_description():
         executable=spawner,
         arguments=["joint_state_broadcaster", "-c", "/controller_manager"],
     )
-    '''
+    
     cartesian_compliance_controller_spawner = Node(
         package="controller_manager",
         executable=spawner,
@@ -83,7 +83,7 @@ def generate_launch_description():
     cartesian_force_controller_spawner = Node(
         package="controller_manager",
         executable=spawner,
-        arguments=["cartesian_force_controller", "--stopped", "-c", "/controller_manager"],
+        arguments=["cartesian_force_controller", "stopped", "-c", "/controller_manager"],
     )
     cartesian_motion_controller_spawner = Node(
         package="controller_manager",
@@ -110,7 +110,7 @@ def generate_launch_description():
         executable=spawner,
         arguments=["invalid_cartesian_force_controller", "--stopped", "-c", "/controller_manager"],
     )
-    '''
+    
     joint_trajectory_controller_spawner = Node(
         package="controller_manager",
         executable=spawner,
@@ -141,13 +141,13 @@ def generate_launch_description():
     nodes = [
         control_node,
         joint_state_broadcaster_spawner,
-        #cartesian_compliance_controller_spawner,
-        #cartesian_force_controller_spawner,
-        #cartesian_motion_controller_spawner,
-        #motion_control_handle_spawner,
+        cartesian_compliance_controller_spawner,
+        cartesian_force_controller_spawner,
+        cartesian_motion_controller_spawner,
+        motion_control_handle_spawner,
         joint_trajectory_controller_spawner,
-        #invalid_cartesian_compliance_controller_spawner,
-        #invalid_cartesian_force_controller_spawner,
+        invalid_cartesian_compliance_controller_spawner,
+        invalid_cartesian_force_controller_spawner,
         robot_state_publisher,
         rviz
     ]
