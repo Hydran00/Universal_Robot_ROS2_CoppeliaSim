@@ -140,7 +140,7 @@ namespace coppeliasim_HWInterface
           rclcpp::get_logger("RRBotSystemPositionOnlyHardware"), "%.1f seconds left...",
           hw_start_sec_ - i);
     }
-    float initial_conf[]={0.0,-1.57,1.57,-1.57,-1.57,0.0};
+    float initial_conf[]={1.57,-1.57,1.57,-1.57,-1.57,0.0};
     for (uint i = 0; i < hw_pos_.size(); i++)
     {
       hw_pos_[i] = initial_conf[i];
