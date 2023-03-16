@@ -17,9 +17,13 @@ A ros package that implements an hardware interface for using ros controllers in
     ``std_msgs/msg/MultiArrayLayout``  
     ``std_msgs/msg/Float64MultiArray``  
     ``sensor_msgs/msg/JointState``  
-  - Build the interface:  
+  - Before building the interface you need to install the following packages:  
+  	``sudo apt install xsltproc``  
+	``pip install xmlschem``  
+  - Now you can build the package:  
       ``cd ..``  
-      ``colcon build``
+      ``export COPPELIASIM_ROOT_DIR=/home/luca/CoppeliaSim``  
+      ``colcon build --symlink-install``
 ## Running the simulation  
 1. Open CoppeliaSim and load ``coppelia_world.ttt`` from ``File->Open_Scene`` then click Play. 
 2. Run the hardware interface + controllers:  
