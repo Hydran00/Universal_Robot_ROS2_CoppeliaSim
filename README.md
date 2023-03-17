@@ -22,7 +22,7 @@ A ros package that implements an hardware interface for using ros controllers in
 	``pip install xmlschem``  
   - Now you can build the package:  
       ``cd ..``  
-      ``export COPPELIASIM_ROOT_DIR=/home/luca/CoppeliaSim``  
+      ``export COPPELIASIM_ROOT_DIR=~/CoppeliaSim``  
       ``colcon build --symlink-install``
 ## Running the simulation  
 1. Open CoppeliaSim and load ``coppelia_world.ttt`` from ``File->Open_Scene`` then click Play. 
