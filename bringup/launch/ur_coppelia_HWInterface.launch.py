@@ -144,7 +144,7 @@ def generate_launch_description():
         cartesian_compliance_controller_spawner,
         cartesian_force_controller_spawner,
         cartesian_motion_controller_spawner,
-        motion_control_handle_spawner,
+        #motion_control_handle_spawner,
         joint_trajectory_controller_spawner,
         invalid_cartesian_compliance_controller_spawner,
         invalid_cartesian_force_controller_spawner,
