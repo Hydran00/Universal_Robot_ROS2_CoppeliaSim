@@ -33,11 +33,9 @@ def generate_launch_description():
     declared_arguments = []
     description_package = get_package_share_directory('coppeliasim_HWInterface')
     xacro_path = os.path.join(description_package,"urdf","ur.urdf.xacro")
-    
     initial_joint_controllers = os.path.join(description_package,"config", "ur_controllers_coppelia.yaml")
     print(initial_joint_controllers)
     ur_type="ur3e"
-    #PathJoinSubstitution([FindPackageShare(description_package),"urdf",description_file])
     robot_description_content = xacro.process_file(xacro_path, mappings={"safety_limits":"true","safety_pos_margin":"0.15",
                                                                         "safety_k_position":"20",
                                                                         "name":"ur","ur_type":ur_type,
@@ -144,7 +142,7 @@ def generate_launch_description():
         cartesian_compliance_controller_spawner,
         cartesian_force_controller_spawner,
         cartesian_motion_controller_spawner,
-        #motion_control_handle_spawner,
+        motion_control_handle_spawner,
         joint_trajectory_controller_spawner,
         invalid_cartesian_compliance_controller_spawner,
         invalid_cartesian_force_controller_spawner,
