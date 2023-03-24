@@ -63,6 +63,9 @@ def generate_launch_description():
             ('cartesian_compliance_controller/target_wrench', 'target_wrench'),
             ('cartesian_force_controller/ft_sensor_wrench', 'ft_sensor_wrench'),
             ('cartesian_compliance_controller/ft_sensor_wrench', 'ft_sensor_wrench'),
+            ('end_effector_controller/target_frame', 'target_frame'),
+            ('end_effector_controller/target_wrench', 'target_wrench'),
+            ('end_effector_controller/ft_sensor_wrench', 'ft_sensor_wrench'),
             ]
     )
 
@@ -115,6 +118,12 @@ def generate_launch_description():
         arguments=["joint_trajectory_controller", "--stopped", "-c", "/controller_manager"],
     )
 
+    end_effector_control_spawner = Node(
+        package="controller_manager",
+        executable=spawner,
+        arguments=["end_effector_controller", "--stopped", "-c", "/controller_manager"],
+    )
+    
     # TF tree
     robot_state_publisher = Node(
         package="robot_state_publisher",
@@ -146,6 +155,7 @@ def generate_launch_description():
         joint_trajectory_controller_spawner,
         invalid_cartesian_compliance_controller_spawner,
         invalid_cartesian_force_controller_spawner,
+        end_effector_control_spawner,
         robot_state_publisher,
         rviz
     ]

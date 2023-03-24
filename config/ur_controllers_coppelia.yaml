@@ -28,6 +28,9 @@ controller_manager:
     forward_position_controller:
       type: position_controllers/JointGroupPositionController
 
+    end_effector_controller:
+      type: end_effector_controller/EndEffectorControl
+
 cartesian_compliance_controller:
   ros__parameters:
 
@@ -177,6 +180,19 @@ motion_control_handle:
       - wrist_2_joint
       - wrist_3_joint
 
+end_effector_controller:
+  ros__parameters:
+    end_effector_link: "wrist_3_link"
+    robot_base_link: "base_link"
+    ft_sensor_ref_link: "wrist_3_link"
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
+      
 joint_trajectory_controller:
   ros__parameters:
     joints:
