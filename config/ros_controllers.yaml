@@ -25,11 +25,6 @@ controller_manager:
     invalid_cartesian_force_controller:
       type: cartesian_force_controller/CartesianForceController
 
-    forward_position_controller:
-      type: position_controllers/JointGroupPositionController
-
-    end_effector_controller:
-      type: end_effector_controller/EndEffectorControl
 
 cartesian_compliance_controller:
   ros__parameters:
@@ -39,7 +34,7 @@ cartesian_compliance_controller:
     # tool.  When you specify a target_wrench, i.e. some additional forces that
     # your robot should apply to its environment, that target_wrench gets
     # applied in this frame.
-    end_effector_link: "tool0"
+    end_effector_link: "wrist_3_link"
 
     # This is usually the link directly before the first actuated joint.  All
     # controllers will build a kinematic chain from this link up to
@@ -109,7 +104,7 @@ cartesian_force_controller:
   ros__parameters:
 
     # See the cartesian_compliance_controller
-    end_effector_link: "tool0"
+    end_effector_link: "wrist_3_link"
     robot_base_link: "base_link"
     ft_sensor_ref_link: "wrist_3_link"
     joints:
@@ -140,7 +135,7 @@ cartesian_motion_controller:
   ros__parameters:
 
     # See the cartesian_compliance_controller
-    end_effector_link: "tool0"
+    end_effector_link: "wrist_3_link"
     robot_base_link: "base_link"
     joints:
       - shoulder_pan_joint
@@ -169,7 +164,7 @@ cartesian_motion_controller:
 
 motion_control_handle:
   ros__parameters:
-    end_effector_link: "tool0"
+    end_effector_link: "wrist_3_link"
     robot_base_link: "base_link"
     ft_sensor_ref_link: "wrist_3_link"
     joints:
@@ -180,19 +175,6 @@ motion_control_handle:
       - wrist_2_joint
       - wrist_3_joint
 
-end_effector_controller:
-  ros__parameters:
-    end_effector_link: "tool0"
-    robot_base_link: "base_link"
-    ft_sensor_ref_link: "wrist_3_link"
-    joints:
-      - shoulder_pan_joint
-      - shoulder_lift_joint
-      - elbow_joint
-      - wrist_1_joint
-      - wrist_2_joint
-      - wrist_3_joint
-      
 joint_trajectory_controller:
   ros__parameters:
     joints:
@@ -214,7 +196,7 @@ joint_trajectory_controller:
 #--------------------------------------------------------------------------------
 invalid_cartesian_compliance_controller:
   ros__parameters:
-    end_effector_link: "tool0"
+    end_effector_link: "wrist_3_link"
     robot_base_link: "base_link"
     ft_sensor_ref_link: "sensor_link"
 
@@ -253,7 +235,7 @@ invalid_cartesian_compliance_controller:
 
 invalid_cartesian_force_controller:
   ros__parameters:
-    end_effector_link: "tool0"
+    end_effector_link: "wrist_3_link"
     robot_base_link: "base_link"
 
     # Invalid: The sensor link is not part of the kinematic chain from
@@ -279,15 +261,6 @@ invalid_cartesian_force_controller:
         rot_y: {p: 0.0}
         rot_z: {p: 0.0}
 joint_trajectory_controller:
-  ros__parameters:
-    joints:
-      - shoulder_pan_joint
-      - shoulder_lift_joint
-      - elbow_joint
-      - wrist_1_joint
-      - wrist_2_joint
-      - wrist_3_joint
-forward_position_controller:
   ros__parameters:
     joints:
       - shoulder_pan_joint

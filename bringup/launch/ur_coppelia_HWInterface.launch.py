@@ -94,7 +94,7 @@ def generate_launch_description():
     motion_control_handle_spawner = Node(
         package="controller_manager",
         executable=spawner,
-        arguments=["motion_control_handle",  "-c", "/controller_manager"],
+        arguments=["motion_control_handle", "-c", "/controller_manager"],
     )
     joint_trajectory_controller_spawner = Node(
         package="controller_manager",
@@ -143,6 +143,10 @@ def generate_launch_description():
         output="log",
         arguments=["-d", rviz_config]
     )
+    rqt = Node(
+       package="rqt",
+       executable="rqt"
+    )
 
     # Nodes to start
     nodes = [
@@ -157,7 +161,8 @@ def generate_launch_description():
         invalid_cartesian_force_controller_spawner,
         end_effector_control_spawner,
         robot_state_publisher,
-        rviz
+        rviz,
+        rqt
     ]
 
     return LaunchDescription(declared_arguments + nodes)

@@ -372,7 +372,7 @@
     <joint name="${prefix}wrist_3-flange" type="fixed">
       <parent link="${prefix}wrist_3_link" />
       <child link="${prefix}flange" />
-      <origin xyz="0 0 0.16" rpy="0 ${-pi/2.0} ${-pi/2.0}" />
+      <origin xyz="0 0 0.1" rpy="0 ${-pi/2.0} ${-pi/2.0}" />
     </joint>
 
     <!-- ROS-Industrial 'tool0' frame - all-zeros tool frame -->
