@@ -29,6 +29,7 @@ else:  # foxy
 
 
 def generate_launch_description():
+    use_sim_time = True
     # Declare arguments
     declared_arguments = []
     description_package = get_package_share_directory('coppeliasim_HWInterface')
@@ -52,7 +53,7 @@ def generate_launch_description():
     control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
-        parameters=[robot_description, robot_controllers],
+        parameters=[robot_description, robot_controllers,{"use_sim_time": use_sim_time}],
         #prefix="screen -d -m gdb -command=/home/scherzin/.ros/my_debug_log --ex run --args",
         output="both",
         remappings=[
@@ -74,54 +75,52 @@ def generate_launch_description():
         package="controller_manager",
         executable=spawner,
         arguments=["joint_state_broadcaster", "-c", "/controller_manager"],
+        parameters=[{"use_sim_time": use_sim_time}]
     )
     
     cartesian_compliance_controller_spawner = Node(
         package="controller_manager",
         executable=spawner,
         arguments=["cartesian_compliance_controller", "-c", "/controller_manager"],
+        parameters=[{"use_sim_time": use_sim_time}]
     )
     cartesian_force_controller_spawner = Node(
         package="controller_manager",
         executable=spawner,
         arguments=["cartesian_force_controller", "--stopped", "-c", "/controller_manager"],
+        parameters=[{"use_sim_time": use_sim_time}]
     )
     cartesian_motion_controller_spawner = Node(
         package="controller_manager",
         executable=spawner,
         arguments=["cartesian_motion_controller", "--stopped", "-c", "/controller_manager"],
+        parameters=[{"use_sim_time": use_sim_time}]
     )
     motion_control_handle_spawner = Node(
         package="controller_manager",
         executable=spawner,
         arguments=["motion_control_handle", "-c", "/controller_manager"],
+        parameters=[{"use_sim_time": use_sim_time}]
     )
     joint_trajectory_controller_spawner = Node(
         package="controller_manager",
         executable=spawner,
         arguments=["joint_trajectory_controller", "--stopped", "-c", "/controller_manager"],
-    )
-    invalid_cartesian_compliance_controller_spawner = Node(
-        package="controller_manager",
-        executable=spawner,
-        arguments=["invalid_cartesian_compliance_controller", "--stopped", "-c", "/controller_manager"],
-    )
-    invalid_cartesian_force_controller_spawner = Node(
-        package="controller_manager",
-        executable=spawner,
-        arguments=["invalid_cartesian_force_controller", "--stopped", "-c", "/controller_manager"],
+        parameters=[{"use_sim_time": use_sim_time}]
     )
     
     joint_trajectory_controller_spawner = Node(
         package="controller_manager",
         executable=spawner,
         arguments=["joint_trajectory_controller", "--stopped", "-c", "/controller_manager"],
+        parameters=[{"use_sim_time": use_sim_time}]
     )
 
     end_effector_control_spawner = Node(
         package="controller_manager",
         executable=spawner,
         arguments=["end_effector_controller", "--stopped", "-c", "/controller_manager"],
+        parameters=[{"use_sim_time": use_sim_time}]
     )
     
     # TF tree
@@ -129,7 +128,7 @@ def generate_launch_description():
         package="robot_state_publisher",
         executable="robot_state_publisher",
         output="both",
-        parameters=[robot_description],
+        parameters=[robot_description,{"use_sim_time": use_sim_time}],
     )
 
     # Visualization
@@ -141,12 +140,10 @@ def generate_launch_description():
         executable="rviz2",
         name="rviz2",
         output="log",
-        arguments=["-d", rviz_config]
+        arguments=["-d", rviz_config],
+        parameters=[{"use_sim_time": use_sim_time}]
     )
-    rqt = Node(
-       package="rqt",
-       executable="rqt"
-    )
+
 
     # Nodes to start
     nodes = [
@@ -157,12 +154,9 @@ def generate_launch_description():
         cartesian_motion_controller_spawner,
         motion_control_handle_spawner,
         joint_trajectory_controller_spawner,
-        invalid_cartesian_compliance_controller_spawner,
-        invalid_cartesian_force_controller_spawner,
         end_effector_control_spawner,
         robot_state_publisher,
-        rviz,
-        rqt
+        rviz
     ]
 
     return LaunchDescription(declared_arguments + nodes)

@@ -17,6 +17,7 @@ A ros package that implements an hardware interface for using ros controllers in
     ``std_msgs/msg/MultiArrayLayout``  
     ``std_msgs/msg/Float64MultiArray``  
     ``sensor_msgs/msg/JointState``  
+    ``rosgraph_msgs/msg/Clock``  
   - Before building the interface you need to install the following packages:  
   	``sudo apt install xsltproc``  
 	``pip install xmlschem``  
@@ -32,4 +33,5 @@ A ros package that implements an hardware interface for using ros controllers in
   ``ros2 control switch_controllers --activate joint_trajectory_controller``
 4. Test the interface sending trajectory:  
   ``ros2 launch coppeliasim_HWInterface test_joint_trajectory_controller.launch.py``
+
 
