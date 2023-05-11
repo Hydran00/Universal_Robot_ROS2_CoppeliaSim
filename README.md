@@ -27,11 +27,15 @@ A ros package that implements an hardware interface for using ros controllers in
       ``colcon build --symlink-install``
 ## Running the simulation  
 1. Open CoppeliaSim and load ``coppelia_world.ttt`` from ``File->Open_Scene`` then click Play. 
-2. Run the hardware interface + controllers:  
+2. Run the hardware interface + controllers:  (you probably should comment the controllers that you do not use in the launch file)
   ``ros2 launch coppeliasim_HWInterface ur_coppelia_HWInterface.launch.py``
 3. Run ``joint_trajectory_controller``:  
   ``ros2 control switch_controllers --activate joint_trajectory_controller``
 4. Test the interface sending trajectory:  
   ``ros2 launch coppeliasim_HWInterface test_joint_trajectory_controller.launch.py``
 
+
+In this video we are using a cartesian controller (https://github.com/fzi-forschungszentrum-informatik/cartesian_controllers/tree/ros2)
+
+https://github.com/Hydran00/Universal_Robot_ROS2_CoppeliaSim/assets/93198865/82b5c3aa-8812-4484-ae80-9001f7101d2d
 
