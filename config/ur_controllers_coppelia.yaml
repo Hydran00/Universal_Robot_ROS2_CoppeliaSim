@@ -1,8 +1,29 @@
 controller_manager:
   ros__parameters:
-    update_rate: 100  # Hz
+    update_rate: 100  # Hz  
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
+
+    io_and_status_controller:
+      type: ur_controllers/GPIOController
+
+    speed_scaling_state_broadcaster:
+      type: ur_controllers/SpeedScalingStateBroadcaster
+
+    force_torque_sensor_broadcaster:
+      type: force_torque_sensor_broadcaster/ForceTorqueSensorBroadcaster
+
+    joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    scaled_joint_trajectory_controller:
+      type: ur_controllers/ScaledJointTrajectoryController
+
+    forward_velocity_controller:
+      type: velocity_controllers/JointGroupVelocityController
+
+    forward_position_controller:
+      type: position_controllers/JointGroupPositionController
 
     cartesian_compliance_controller:
       type: cartesian_compliance_controller/CartesianComplianceController
@@ -15,22 +36,103 @@ controller_manager:
 
     motion_control_handle:
       type: cartesian_controller_handles/MotionControlHandle
-
-    joint_trajectory_controller:
-      type: joint_trajectory_controller/JointTrajectoryController
-
-    invalid_cartesian_compliance_controller:
-      type: cartesian_compliance_controller/CartesianComplianceController
-
-    invalid_cartesian_force_controller:
-      type: cartesian_force_controller/CartesianForceController
-
-    forward_position_controller:
-      type: position_controllers/JointGroupPositionController
-
     end_effector_controller:
       type: end_effector_controller/EndEffectorControl
 
+speed_scaling_state_broadcaster:
+  ros__parameters:
+    state_publish_rate: 100.0
+
+
+force_torque_sensor_broadcaster:
+  ros__parameters:
+    sensor_name: tcp_fts_sensor
+    state_interface_names:
+      - force.x
+      - force.y
+      - force.z
+      - torque.x
+      - torque.y
+      - torque.z
+    frame_id: tool0
+    topic_name: ft_data
+
+
+joint_trajectory_controller:
+  ros__parameters:
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: false
+    constraints:
+      stopped_velocity_tolerance: 0.2
+      goal_time: 0.0
+      shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
+      shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
+      elbow_joint: { trajectory: 0.2, goal: 0.1 }
+      wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
+      wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
+      wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
+
+
+scaled_joint_trajectory_controller:
+  ros__parameters:
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: false
+    constraints:
+      stopped_velocity_tolerance: 0.2
+      goal_time: 0.0
+      shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
+      shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
+      elbow_joint: { trajectory: 0.2, goal: 0.1 }
+      wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
+      wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
+      wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
+
+forward_velocity_controller:
+  ros__parameters:
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
+    interface_name: velocity
+
+forward_position_controller:
+  ros__parameters:
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
 cartesian_compliance_controller:
   ros__parameters:
 
@@ -39,7 +141,7 @@ cartesian_compliance_controller:
     # tool.  When you specify a target_wrench, i.e. some additional forces that
     # your robot should apply to its environment, that target_wrench gets
     # applied in this frame.
-    end_effector_link: "tool0"
+    end_effector_link: "wrist_3_link"
 
     # This is usually the link directly before the first actuated joint.  All
     # controllers will build a kinematic chain from this link up to
@@ -109,7 +211,7 @@ cartesian_force_controller:
   ros__parameters:
 
     # See the cartesian_compliance_controller
-    end_effector_link: "tool0"
+    end_effector_link: "wrist_3_link"
     robot_base_link: "base_link"
     ft_sensor_ref_link: "wrist_3_link"
     joints:
@@ -140,7 +242,7 @@ cartesian_motion_controller:
   ros__parameters:
 
     # See the cartesian_compliance_controller
-    end_effector_link: "tool0"
+    end_effector_link: "wrist_3_link"
     robot_base_link: "base_link"
     joints:
       - shoulder_pan_joint
@@ -169,7 +271,7 @@ cartesian_motion_controller:
 
 motion_control_handle:
   ros__parameters:
-    end_effector_link: "tool0"
+    end_effector_link: "wrist_3_link"
     robot_base_link: "base_link"
     ft_sensor_ref_link: "wrist_3_link"
     joints:
@@ -179,10 +281,9 @@ motion_control_handle:
       - wrist_1_joint
       - wrist_2_joint
       - wrist_3_joint
-
 end_effector_controller:
   ros__parameters:
-    end_effector_link: "tool0"
+    end_effector_link: "wrist_3_link"
     robot_base_link: "base_link"
     ft_sensor_ref_link: "wrist_3_link"
     joints:
@@ -192,107 +293,4 @@ end_effector_controller:
       - wrist_1_joint
       - wrist_2_joint
       - wrist_3_joint
-      
-joint_trajectory_controller:
-  ros__parameters:
-    joints:
-      - shoulder_pan_joint
-      - shoulder_lift_joint
-      - elbow_joint
-      - wrist_1_joint
-      - wrist_2_joint
-      - wrist_3_joint
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
 
-
-#--------------------------------------------------------------------------------
-# Invalid controllers for integration tests
-#--------------------------------------------------------------------------------
-invalid_cartesian_compliance_controller:
-  ros__parameters:
-    end_effector_link: "tool0"
-    robot_base_link: "base_link"
-    ft_sensor_ref_link: "sensor_link"
-
-    # Invalid: the compliance link is not part of the kinematic chain from
-    # robot_base_link to end_effector_link
-    compliance_ref_link: "invalid_compliance_link"
-
-    joints:
-      - shoulder_pan_joint
-      - shoulder_lift_joint
-      - elbow_joint
-      - wrist_1_joint
-      - wrist_2_joint
-      - wrist_3_joint
-
-    command_interfaces:
-      - position
-
-    # Arbitrary
-    stiffness:
-        trans_x: 500.0
-        trans_y: 500.0
-        trans_z: 500.0
-        rot_x: 20.0
-        rot_y: 20.0
-        rot_z: 20.0
-
-    # Arbitrary
-    pd_gains:
-        trans_x: {p: 0.0}
-        trans_y: {p: 0.0}
-        trans_z: {p: 0.0}
-        rot_x: {p: 0.0}
-        rot_y: {p: 0.0}
-        rot_z: {p: 0.0}
-
-invalid_cartesian_force_controller:
-  ros__parameters:
-    end_effector_link: "tool0"
-    robot_base_link: "base_link"
-
-    # Invalid: The sensor link is not part of the kinematic chain from
-    # robot_base_link to end_effector_link
-    ft_sensor_ref_link: "invalid_sensor_link"
-    joints:
-      - shoulder_pan_joint
-      - shoulder_lift_joint
-      - elbow_joint
-      - wrist_1_joint
-      - wrist_2_joint
-      - wrist_3_joint
-
-    command_interfaces:
-      - position
-
-    # Arbitrary
-    pd_gains:
-        trans_x: {p: 0.0}
-        trans_y: {p: 0.0}
-        trans_z: {p: 0.0}
-        rot_x: {p: 0.0}
-        rot_y: {p: 0.0}
-        rot_z: {p: 0.0}
-joint_trajectory_controller:
-  ros__parameters:
-    joints:
-      - shoulder_pan_joint
-      - shoulder_lift_joint
-      - elbow_joint
-      - wrist_1_joint
-      - wrist_2_joint
-      - wrist_3_joint
-forward_position_controller:
-  ros__parameters:
-    joints:
-      - shoulder_pan_joint
-      - shoulder_lift_joint
-      - elbow_joint
-      - wrist_1_joint
-      - wrist_2_joint
-      - wrist_3_joint
